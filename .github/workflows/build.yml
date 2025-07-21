@@ -12,11 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: cargo install --locked \
-              --git https://github.com/getzola/zola \
-              --branch master \
-              --features "indexing-zh" \
-              --root dist
+      - run: cargo install --locked --git https://github.com/getzola/zola --features "indexing-zh"
       - name: Tar & upload
         run: |
           cd dist/bin
