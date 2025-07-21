@@ -4,6 +4,8 @@ on:
   push:
     tags:        # 每打 tag 就编译一次，如 v0.18.0-zh1
       - 'v*'
+  workflow_dispatch:
+
 
 jobs:
   build:
