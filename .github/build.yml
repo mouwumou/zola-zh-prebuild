@@ -1,0 +1,29 @@
+name: Build Zola (indexing‑zh)
+
+on:
+  push:
+    tags:        # 每打 tag 就编译一次，如 v0.18.0-zh1
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: rust-lang/setup-rust@v1
+      - run: cargo install --locked \
+              --git https://github.com/getzola/zola \
+              --branch master \
+              --features "indexing-zh" \
+              --root dist
+      - name: Tar & upload
+        run: |
+          cd dist/bin
+          tar -czf zola-zh-linux-x86_64.tar.gz zola
+          echo "RELEASE_TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.RELEASE_TAG }}
+          artifacts: "dist/bin/zola-zh-linux-x86_64.tar.gz"
+          body: "Zola with indexing‑zh"
