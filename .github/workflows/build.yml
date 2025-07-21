@@ -27,5 +27,5 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ env.RELEASE_TAG }}
-          artifacts: "dist/bin/zola-zh-linux-x86_64.tar.gz"
+          artifacts: "zola-zh-linux-x86_64.tar.gz"
           body: "Zola with indexing‑zh"
