@@ -15,11 +15,14 @@ jobs:
       - run: |
           INSTALL_DIR="$GITHUB_WORKSPACE/dist"
           cargo install --locked --git https://github.com/getzola/zola --features "indexing-zh" --root "$INSTALL_DIR"
-      - name: Tar & upload
-        run: |
-          cd "$INSTALL_DIR/bin"
-          tar -czf zola-zh-linux-x86_64.tar.gz zola
+          # 打包
+          tar -C "$INSTALL_DIR/bin" -czf zola-zh-linux-x86_64.tar.gz zola
           echo "RELEASE_TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      # - name: Tar & upload
+      #   run: |
+      #     cd "$INSTALL_DIR/bin"
+      #     tar -czf zola-zh-linux-x86_64.tar.gz zola
+      #     echo "RELEASE_TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
       - name: Release
         uses: ncipollo/release-action@v1
         with:
